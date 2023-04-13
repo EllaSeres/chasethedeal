@@ -1,0 +1,12 @@
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\bin\Debug\GameDB.mdf
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\bin\Debug\GameDB_log.ldf
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\bin\Debug\ChaseTheDeal.exe.config
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\bin\Debug\ChaseTheDeal.exe
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\bin\Debug\ChaseTheDeal.pdb
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.csproj.AssemblyReference.cache
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.csproj.SuggestedBindingRedirects.cache
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.Properties.Resources.resources
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.csproj.GenerateResource.cache
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.csproj.CoreCompileInputs.cache
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.exe
+C:\Users\Razvan\Documents\GitHub\chasethedeal\ChaseTheDeal\obj\Debug\ChaseTheDeal.pdb

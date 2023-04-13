@@ -1,8 +1,33 @@
-
-body{
-background-image: url(bg.svg);
-background-size: cover;
-display:block;
-background-color: rgb(155, 57, 121);
-background-repeat: no-repeat;
+*{margin: 0;
+padding: 0;
+box-sizing: border-box;
+outline: none;}
+body {
+    width: 100%;
+    background-color: rgb(155, 57, 121);
+    height: 100dvh;
+    background: url(bg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+}
+.centered {
+	background: url(meniubg.svg);
+	height: 100dvh;
+  	margin: 0 auto;
+  	width: 100%;
+	display: flex;
+	 background-repeat: no-repeat;
+  	justify-content: center;
+  	align-items: center;
+  	background-position: center center;
+}
+.centered-vertical {
+	width: 100%;
+	height: 100%;
+	min-height: 500px;
+	
+}
+.login{
+	background: url(login.svg);
 }

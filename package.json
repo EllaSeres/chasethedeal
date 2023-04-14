@@ -1,0 +1,32 @@
+{
+  "name": "chasethedeal",
+  "version": "1.0.0",
+  "description": "JS chaser game :)",
+  "scripts": {
+    "backend": "node src/server/index.js",
+    "frontend:dev": "vite",
+    "dev": "concurrently 'npm run backend' 'npm run frontend:dev'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EllaSeres/chasethedeal.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EllaSeres/chasethedeal/issues"
+  },
+  "homepage": "https://github.com/EllaSeres/chasethedeal#readme",
+  "imports": {
+	"#client/*": "./src/client/*",
+	"#server/*": "./src/server/*",
+  	"#lib/*": "./src/lib/*" 
+  },
+  "devDependencies": {
+    "concurrently": "^8.0.1",
+    "vite": "^4.2.1"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}

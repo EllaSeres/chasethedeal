@@ -5,7 +5,8 @@
   "scripts": {
     "backend": "node src/server/index.js",
     "frontend:dev": "vite",
-    "dev": "concurrently 'npm run backend' 'npm run frontend:dev'"
+    "dev": "concurrently 'npm run backend' 'npm run frontend:dev'",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
@@ -17,13 +18,15 @@
     "url": "https://github.com/EllaSeres/chasethedeal/issues"
   },
   "homepage": "https://github.com/EllaSeres/chasethedeal#readme",
+  "type": "module",
   "imports": {
-	"#client/*": "./src/client/*",
-	"#server/*": "./src/server/*",
-  	"#lib/*": "./src/lib/*" 
+    "#client/*": "./src/client/*",
+    "#server/*": "./src/server/*",
+    "#lib/*": "./src/lib/*"
   },
   "devDependencies": {
     "concurrently": "^8.0.1",
+    "eslint": "^8.38.0",
     "vite": "^4.2.1"
   },
   "dependencies": {

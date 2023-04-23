@@ -6,13 +6,17 @@ export default class Game {
     player = null;
 
     constructor(name) {
-        this.ws = new WebSocket(import.meta.env.API_BASE + '/game?name=' + encodeURIComponent(name));
+        this.ws = new WebSocket('ws://' + import.meta.env.VITE_API_BASE + '/game?name=' + encodeURIComponent(name));
 
         this.ws.addEventListener('message', e => {
             const data = JSON.parse(e.data);
             console.log(data);
             this.received(data);
         });
+    }
+
+    waitForConnect() {
+        return new Promise(resolve => this.ws.addEventListener('open', resolve));
     }
 
     setKind(kind) {
@@ -39,15 +43,15 @@ export default class Game {
         }
 
         switch(msg.type) {
-        case 'init':
-            this.objects[msg.player] = {
+        case 'addObject':
+            this.objects[msg.name] = {
                 x: msg.x,
                 y: msg.y
             };
             break;
-        case 'move':
-            this.objects[msg.player].x = msg.x;
-            this.objects[msg.player].y = msg.y;
+        case 'updateObject':
+            this.objects[msg.name].x = msg.x;
+            this.objects[msg.name].y = msg.y;
             break;
         // TOOD: more server->client messages such as leaves spawining/being collected :)
         }

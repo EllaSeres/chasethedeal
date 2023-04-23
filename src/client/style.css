@@ -67,8 +67,23 @@ body {
 	display: none; /* by default, hide all screens */
 }
 
+#gamearea {
+	position: relative;
+	display: block;
+	width: 600px;
+	height: 600px;
+	background: white;
+}
+
+.game-object {
+	position: absolute;
+	width: 10px; height: 10px; background: black;
+	padding: -5px;
+}
+
 .current-screen-main #screen-main,
 .current-screen-about #screen-about,
-.current-screen-rules #screen-rules {
+.current-screen-rules #screen-rules,
+.current-screen-game #screen-game {
 	display: initial;
 }

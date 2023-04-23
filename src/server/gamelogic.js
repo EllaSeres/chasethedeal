@@ -34,10 +34,7 @@ class Game {
     name = null;
 
     // players, leaves, roadblocks
-    objects = {
-        runner: null,
-        chaser: null,
-    };
+    objects = new Map();
 
     constructor(ws, name) {
         this.wsHost = ws;
@@ -66,7 +63,7 @@ class Game {
         if(this.wsHost)  this.wsHost.send(JSON.stringify(message));
     }
 
-    gametick() {
+    gameTick() {
         // Runs 10 times a second, use it, for example, TODO:
         // - set scores
         // - spawn new leaves
@@ -77,6 +74,16 @@ class Game {
 
     gamelogic(ws) {
         const player = new Player(ws, 0, 0, this);
+
+        // Send this player a list of all current objects
+        for(let name of Object.keys(this.objects)) {
+            ws.send(JSON.stringify({
+                type: 'addObject',
+                name: name,
+                x: this.objects[name].x,
+                y: this.objects[name].y
+            }));
+        }
 
         ws.on('message', message => {
             const data = JSON.parse(message);
@@ -109,25 +116,15 @@ class Game {
 
                 // Process a player having chosen a class
                 player.init(data.kind);
-                this.objects[data.kind] = player;
-                this.broadcast({
-                    type: 'init',
-                    player: data.kind,
-                    x: player.x,
-                    y: player.y
-                });
+                this.addObject(player.kind, player);
 
                 break;
 
             case 'move': { // {type: 'move', newx: 123, newy: 234}
                 const { newx, newy } = data;
+
                 player.move(newx, newy); // This function checks if the move is legal and applies it to the player object accordingly
-                this.broadcast({
-                    type: 'move',
-                    player: player.kind,
-                    x: player.x,
-                    y: player.y
-                });
+                this.updateObject(player.kind);
 
                 break;
             }
@@ -139,6 +136,25 @@ class Game {
             delete games[this.name];
         });
     }
+
+    addObject(name, value) {
+        this.objects[name] = value;
+        this.broadcast({
+            type: 'addObject',
+            name: name,
+            x: value.x,
+            y: value.y
+        });
+    }
+
+    updateObject(name) {
+        this.broadcast({
+            type: 'updateObject',
+            name: name,
+            x: this.objects[name].x,
+            y: this.objects[name].y
+        });
+    }
 }
 
 export default function(app) {
@@ -147,18 +163,18 @@ export default function(app) {
     console.log('Game logic loaded:)');
 
     app.ws('/game', (ws, req) => {
-        const { peer } = req.query;
-        if(!peer) {
+        const { name } = req.query;
+        if(!name) {
             ws.close();
             return;
         }
 
-        if(games[peer]) {
+        if(games[name]) {
             console.log('Guest added');
-            games[peer].addGuest(ws);
+            games[name].addGuest(ws);
         } else {
             console.log('Game created');
-            games[peer] = new Game(ws, peer);
+            games[name] = new Game(ws, name);
         }
     });
 }

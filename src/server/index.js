@@ -19,6 +19,9 @@ app.get('/', (req, res) => {
 import gamelogic from './gamelogic.js';
 gamelogic(app);
 
+import users from './users.js';
+users(app);
+
 app.listen(SERVER_PORT, () => {
     console.log(`Server running on http://localhost:${SERVER_PORT} :)`);
 });

@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# Get a list of staged .js/jsx/tsx/ts files
+STAGED_FILES=($(git diff --diff-filter=d --cached --name-only | grep -E '^.*\.(js|jsx|tsx|ts)$'))
+
+# Lint them, automatically fixing what errors eslint can
+npm run lint -- "${STAGED_FILES[@]}" --fix
+ESLINT_EXIT="$?"
+
+# Add them again so the fixes are actually applied before committing
+git add "${STAGED_FILES[@]}"
+
+# If there were no errors after fixing, all is good, else cancel
+if [[ "${ESLINT_EXIT}" == 0 ]]; then
+  printf "\n\033[42m\x1b[30mCODE STYLE OK\033[0m 🥳\n"
+  exit 0
+else
+  printf "\n\033[41mCOMMIT CANCELLED:\033[0m Fix eslint errors and try again 👺\n"
+  exit 1
+fi
+

@@ -5,12 +5,7 @@ import expressWs from 'express-ws';
 const games = {};
 
 class Player {
-    ws;
-    x;
-    y;
-    score;
-    game;
-    kind;
+    ws; x; y; score; game; kind;
 
     constructor(ws, x, y, game) {
         this.ws = ws;
@@ -26,6 +21,8 @@ class Player {
     }
 
     move(newx, newy) {
+        // TODO: Check if this is a legal move
+        // TODO: Check if this move means the chaser wins or the runner gets more score
         this.x = newx;
         this.y = newy;
     }
@@ -48,6 +45,8 @@ class Game {
         console.log('Game started by host:', name);
 
         this.gamelogic(ws);
+
+        this.interval = setInterval(() => this.gameTick(), 100);
     }
 
     addGuest(ws) {
@@ -67,6 +66,15 @@ class Game {
         if(this.wsHost)  this.wsHost.send(JSON.stringify(message));
     }
 
+    gametick() {
+        // Runs 10 times a second, use it, for example, TODO:
+        // - set scores
+        // - spawn new leaves
+        // Don't use it to:
+        // - Compute player movements (that should be handled in Player.move)
+        // - Create player objects (done when handling "init" events)
+    }
+
     gamelogic(ws) {
         const player = new Player(ws, 0, 0, this);
 
@@ -75,8 +83,6 @@ class Game {
 
             switch(data.type) {
             case 'init':
-                console.log('init', data.kind);
-
                 if(data.kind !== 'runner' && data.kind !== 'chaser') {
                     ws.send(JSON.stringify({
                         type: 'init',
@@ -101,6 +107,7 @@ class Game {
                     return;
                 }
 
+                // Process a player having chosen a class
                 player.init(data.kind);
                 this.objects[data.kind] = player;
                 this.broadcast({
@@ -114,7 +121,7 @@ class Game {
 
             case 'move': { // {type: 'move', newx: 123, newy: 234}
                 const { newx, newy } = data;
-                player.move(newx, newy); // may not do anything
+                player.move(newx, newy); // This function checks if the move is legal and applies it to the player object accordingly
                 this.broadcast({
                     type: 'move',
                     player: player.kind,
@@ -128,6 +135,7 @@ class Game {
         });
 
         ws.on('disconnect', () => {
+            clearInterval(this.interval);
             delete games[this.name];
         });
     }

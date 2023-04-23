@@ -5,17 +5,33 @@
 		<script type="module" src="index.js"></script>
 	</head>
 	<body>
-		<div id="container">
-			<img id="title" alt="Chase the deal" src="title.svg" />
+		<div id="container" class="current-screen-main">
+			<div id="screen-main">
+				<img id="title" alt="Chase the deal" src="title.svg" />
 
-			<div id="authentication">
-				<button id="loginButton"><img src="login.svg" alt="Log in"></button>
-				<button id="signupButton"><img src="signup.svg" alt="Sign up"></button>
+				<div id="authentication">
+					<button id="loginButton"><img src="login.svg" alt="Log in"></button>
+					<button id="signupButton"><img src="signup.svg" alt="Sign up"></button>
+				</div>
+
+				<div id="infos">
+					<button id="rulesButton" data-toscreen="rules"><img src="cuffs.svg" alt="Rules"></button>
+					<button id="aboutButton" data-toscreen="about"><img src="ouid.svg" alt="About"></button>
+				</div>
 			</div>
-
-			<div id="infos">
-				<button id="rulesButton"><img src="cuffs.svg" alt="Rules"></button>
-				<button id="aboutButton"><img src="ouid.svg" alt="About"></button>
+			<div id="screen-about">
+				<h1>About :)</h1>
+				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+				<button data-toscreen="main">Go back</button>
+			</div>
+			<div id="screen-rules">
+				<h1>Rules :)</h1>
+				<button data-toscreen="main">Go back</button>
 			</div>
 		</div>
 	</body>

@@ -62,3 +62,13 @@ body {
 #infos img {
 	width: 10vh;
 }
+
+#container > div {
+	display: none; /* by default, hide all screens */
+}
+
+.current-screen-main #screen-main,
+.current-screen-about #screen-about,
+.current-screen-rules #screen-rules {
+	display: initial;
+}

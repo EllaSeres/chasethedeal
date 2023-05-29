@@ -1,38 +1,85 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="style.css">
-		<script type="module" src="index.js"></script>
-	</head>
-	<body>
-		<div id="container" class="current-screen-main">
-			<div id="screen-main">
-				<img id="title" alt="Chase the deal" src="title.svg" />
+<head>
+	<link rel="stylesheet" href="style.css">
+	<script type="module" src="index.js"></script>
+</head>
+<body>
+	<div id="container" class="current-screen-main">
+		<div id="screen-main">
+			<img id="title" alt="Chase the deal" src="title.svg" />
 
-				<div id="authentication">
-					<button id="loginButton"><img src="login.svg" alt="Log in"></button>
-					<button id="signupButton"><img src="signup.svg" alt="Sign up"></button>
-				</div>
-
-				<div id="infos">
-					<button id="rulesButton" data-toscreen="rules"><img src="cuffs.svg" alt="Rules"></button>
-					<button id="aboutButton" data-toscreen="about"><img src="ouid.svg" alt="About"></button>
-				</div>
+			<div id="authentication">
+				<button id="loginButton" data-toscreen="login"><img src="login.svg" alt="Log in"></button>
+				<button id="signupButton" data-toscreen="signup"><img src="signup.svg" alt="Sign up"></button>
 			</div>
-			<div id="screen-about">
-				<h1>About :)</h1>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+
+			<div id="infos">
+				<button id="rulesButton" data-toscreen="rules"><img src="cuffs.svg" alt="Rules"></button>
+				<button id="aboutButton" data-toscreen="about"><img src="ouid.svg" alt="About"></button>
+			</div>
+		</div>
+		<div id="screen-about">
+			<h1>About :)</h1>
+			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
 				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
 				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
 				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
 				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-				<button data-toscreen="main">Go back</button>
-			</div>
-			<div id="screen-rules">
-				<h1>Rules :)</h1>
-				<button data-toscreen="main">Go back</button>
-			</div>
+			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+			<button data-toscreen="main">Go back</button>
 		</div>
-	</body>
+		<div id="screen-rules">
+			<h1>Rules :)</h1>
+			<button data-toscreen="main">Go back</button>
+		</div>
+		<div id="screen-login">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<form id="login" action="#">
+				<label><img src="labelun.svg" alt="label username"><input type="text" name="username"></label>
+				<label><img src="labelps.svg" alt="label password"><input type="password" name="password"></label>
+				<br/>
+				<button id="play"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+				<button id="delete" ><img src="delete.svg" alt="Delete user"></button>
+			</form>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-signup">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<form id="signup" action="#">
+				<label><img src="labelun.svg" alt="label username"><input type="text" name="username"></label>
+				<label><img src="labelps.svg" alt="label password"><input type="password" name="password"></label>
+				<br/>
+				<button id="play"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+			</form>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-code">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="codehold">
+			<form id="code" action="#">
+			<label><img src="gamecode.svg" alt="label code"><input type="text" name="username"></label>
+			<button id="join"><img src="join.svg" alt="Join" data-toscreen="dealer" ></button>
+            </form>
+           
+        </div>
+         </div>
+            <div id="screen-dealer">
+            <img id="title" alt="Chase the deal" src="title.svg" />
+            <img src="dealer.svg" alt="Dealer" id="currentKind">	
+             <div class="slider" id="kindSlider">
+                <a href="#" id="selectDealer">
+                    <img src="dealertext.svg" alt="dealer text" id="dealertext">
+                </button>
+                <a href="#" id="selectCop">
+                	<img src="coptext.svg" alt="cop text" id="coptext">
+                </a>
+            </div>
+            </div>
+
+	</div>
+</body>
 </html>

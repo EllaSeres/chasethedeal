@@ -17,6 +17,6 @@ export async function logout() {
     return await api('POST', '/logout');
 }
 
-export async function singup(username, password) {
+export async function signup(username, password) {
     return await api('POST', '/users', { username, password });
 }

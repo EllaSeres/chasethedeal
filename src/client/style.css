@@ -1,7 +1,9 @@
+
+
 button {
 	border: none;
 	background: none;
-
+	height: 12vh;
 	cursor: pointer;
 }
 
@@ -25,50 +27,168 @@ body {
 
 	display: flex;
 	flex-direction: column;
-	justify-content: center;
+	padding-top: 12vh;
 }
 
 #title {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	box-sizing: border-box;
-
-	padding: 10vh 7vh; /* Position of the title */
+	margin-bottom: 7vh;
 }
 
 #authentication {
 	display: flex;
 	flex-direction: column; /* buttons come one after another vertically */
 	align-items: center; /* and are centered horizontally */
-	gap: 6vh; /* spacing between the buttons */
+	gap: 5vh; /* spacing between the buttons */
 }
+#playanddelete{
+	margin-top: 4vh;
+	display: flex;
+	flex-direction: column; /* buttons come one after another vertically */
+	align-items: center; /* and are centered horizontally */
+	gap: 3vh; /* spacing between the buttons */
 
-#authentication button {
-	width: 60%;
+}
+#inputs {
+	margin-top: 15vh;
+	display: flex;
+	flex-direction: column; /* buttons come one after another vertically */
+	align-items: center; /* and are centered horizontally */
+	gap: 1vh; /* spacing between the buttons */
 }
 
 #infos {
-	position: absolute;
-	bottom: 8vh;
-	right: 8vh;
+	display:flex;
+	margin-top: 4vh;
+	justify-content:center;
+	align-items:flex-end;
 }
 
 #infos button {
-	margin: 1vh;
+	height: 15vh;
 }
 
-#infos img {
-	width: 10vh;
+button > img {
+	width: 100%;
+	height: 100%;
+	object-fit: fit;
 }
 
 #container > div {
 	display: none; /* by default, hide all screens */
 }
 
+form {
+	flex: 1;
+	margin-bottom: 5vh;
+	display: flex;
+	flex-direction: column;
+	gap: 3vh;
+	width: 100%;
+}
+
+form > label {
+	display: flex;
+	position: relative;
+	width: 100%;
+	height: 10vh;
+  	align-items: center;
+}
+
+form > label > img {
+	position: absolute;
+	left: 0;
+}
+
+form > label > input {
+	position: absolute;
+	width: 36vh;
+	right: 0;
+	border: unset;
+	background: #ff8d51;
+	border-radius: 2vh;
+	padding: 1vh;
+	margin-right: 2vh;
+}
+
+form button {
+	height: 15vh;
+}
+
+#delete{
+	height: 8vh;
+}
+#play{
+	height: 8vh;
+}
+#join{
+	height: 10vh;
+}
+#currentKind {
+	height:45vh;
+}
+#arrow{
+	position: absolute;
+	left: 8vh; bottom: 8vh;
+	height: 12vh;
+}
+#codehold{
+	display:flex;
+justify-content:center;
+align-items:center;
+height: 100%;
+}
+#coptext{
+height:4vh;
+}
+#dealertext{
+	height: 4vh;
+}
+
+.slider {
+	position: relative;
+	display: grid;
+	margin:  auto;
+	grid-template-columns: 1fr 1fr;
+	width: 90%;
+	background: #8c2175;
+	border-radius: 2vh;
+	overflow: hidden;
+}
+.slider a {
+	display: inline-flex;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    padding: 2vh;
+    margin: 1vh;
+    z-index: 1;
+}
+.slider::before {
+	display: block;
+	position: absolute;
+	content: " ";
+	background: #ff8d51;
+	width: calc(50% - 2vh);
+	height: calc(100% - 2vh);
+	margin: 1vh;
+	transition: transform 200ms;
+	border-radius: 1vh;
+}
+.slider.selected-left::before {
+	transform: translateX(0);
+}
+.slider.selected-right::before {
+	transform: translateX(100%);
+}
+
 .current-screen-main #screen-main,
 .current-screen-about #screen-about,
-.current-screen-rules #screen-rules {
+.current-screen-rules #screen-rules ,
+.current-screen-login #screen-login ,
+.current-screen-signup #screen-signup,
+.current-screen-code #screen-code,
+.current-screen-dealer #screen-dealer
+{
 	display: initial;
 }
+

@@ -1,7 +1,7 @@
 'use strict';
 
 export default async function api(method, path, body) {
-    const r = await fetch(import.meta.env.API_BASE + path, {
+    const r = await fetch(import.meta.env.VITE_API_BASE + path, {
         method: method,
         headers: {
             'Content-Type': 'application/json'

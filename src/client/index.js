@@ -1,4 +1,5 @@
 import { login, signup } from './auth.js';
+import { playAudio } from './sound.js';
 
 const $ = document.querySelector.bind(document),
     $$ = document.querySelectorAll.bind(document);
@@ -69,3 +70,13 @@ $('#clicketyclack').addEventListener('click', () => {
 
     playAudio('sound/menuMusic_full.ogg', true);
 });
+
+$$('button').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        playAudio('sound/buttonHover.ogg');
+    });
+    btn.addEventListener('click', () => {
+        playAudio('sound/buttonClick.ogg');
+    });
+});
+

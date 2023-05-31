@@ -18,6 +18,37 @@
 </table>
 </div>
 
+<script type="module">
+  import { playAudio } from './sound.js';
+  import { scoreboard } from './auth.js';
+
+  async function loadScoreboard() {
+      const el = document.querySelector('table');
+      el.innerHTML = '<tr><td>Username</td><td>Runner</td><td>Chaser</td></tr>';
+
+      const rows = await scoreboard();
+
+      for(let row of rows) {
+          el.innerHTML += `<tr>
+          <td>${row.username}</td>
+          <td>${row.winsRunner}</td>
+          <td>${row.winsChaser}</td>
+      </tr>`;
+      }
+  }
+
+  const q = new URLSearchParams(location.search);
+  const status = q.get("status");
+
+  if(status == 'You win') {
+    alert('You win!');
+  } else if(status == 'You lose') {
+    alert('You lose!');
+  }
+
+  loadScoreboard();
+</script>
+
 </body>
 </html>
 <script>

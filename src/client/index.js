@@ -65,11 +65,7 @@ $('#playBtn').addEventListener('click', () => {
     window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });
 
-$('#clicketyclack').addEventListener('click', () => {
-    $('#clicketyclack').style.left = '-100000000px';
-
-    playAudio('sound/menuMusic_full.ogg', true);
-});
+playAudio("sound/menuMusic_full.ogg", true, 0.1)
 
 $$('button').forEach(btn => {
     btn.addEventListener('mouseenter', () => {
@@ -79,4 +75,3 @@ $$('button').forEach(btn => {
         playAudio('sound/buttonClick.ogg');
     });
 });
-

@@ -1,7 +1,7 @@
 'use strict';
 
 import { GameObject, MapColliders } from '#lib/game.js';
-import { playAudio } from './sound.js';
+import { playAudio, stopAudio } from './sound.js';
 
 export default class GameClient {
     ws;
@@ -63,12 +63,14 @@ export default class GameClient {
         case 'gameOver':
             if(msg.winner == this.playableObject) {
                 // Win
+                stopAudio("sound/gameMusic_full.ogg")
                 playAudio('sound/gameWin.ogg');
                 setTimeout(() => {
                     window.location = '/scoreboard.html?status=You+win';
                 }, 3000);
             } else {
                 // Lose
+                stopAudio("sound/gameMusic_full.ogg")
                 playAudio('sound/gameLoss.ogg');
                 setTimeout(() => {
                     window.location = '/scoreboard.html?status=You+lose';

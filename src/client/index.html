@@ -3,7 +3,6 @@
 <head>
 	<meta charset="UTF-8" >
 	<link rel="stylesheet" href="style.css">
-	<script type="module" src="index.js"></script>
 </head>
 <body>
 	<div id="container" class="current-screen-main">
@@ -53,8 +52,8 @@
 				<label><img src="labelun.svg" alt="label username"><input type="text" name="username" id="username"></label>
 				<label><img src="labelps.svg" alt="label password"><input type="password" name="password" id="password"></label>
 				<br/>
-				<button id="play"><img src="play.svg" alt="Play" data-toscreen="code"></button>
-				<button id="delete" ><img src="delete.svg" alt="Delete user"></button>
+				<button id="loginBtn"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+				<button id="deleteBtn" ><img src="delete.svg" alt="Delete user"></button>
 			</form>
 
 			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
@@ -65,7 +64,7 @@
 				<label><img src="labelun.svg" alt="label username"><input type="text" name="username"></label>
 				<label><img src="labelps.svg" alt="label password"><input type="password" name="password"></label>
 				<br/>
-				<button id="play"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+				<button id="signupBtn"><img src="play.svg" alt="Play" data-toscreen="code"></button>
 			</form>
 
 			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
@@ -73,11 +72,10 @@
 		<div id="screen-code">
 			<img id="title" alt="Chase the deal" src="title.svg" />
 			<div id="codehold">
-			<form id="code" action="#">
-			<label><img src="gamecode.svg" alt="label code"><input type="text" name="username"></label>
-			<button id="join"><img src="join.svg" alt="Join" data-toscreen="dealer" ></button>
+			<form id="code" onsubmit="return false;">
+			<label><img src="gamecode.svg" alt="label code"><input type="text" name="code" id="codeInput"></label>
+			<button id="join" data-toscreen="dealer"><img src="join.svg" alt="Join"></button>
             </form>
-           
         </div>
          </div>
             <div id="screen-dealer">
@@ -86,18 +84,15 @@
              <div class="slider" id="kindSlider">
                 <a href="#" id="selectDealer">
                     <img src="dealertext.svg" alt="dealer text" id="dealertext">
-                </button>
+                 </a>
                 <a href="#" id="selectCop">
                 	<img src="coptext.svg" alt="cop text" id="coptext">
 
                 </a>
             </div>
-           </div>
-       <div id="screen-">
-       	
-       </div>
-
+            <button id="playBtn">Play</button>
+            </div>
 	</div>
-
+	<script type="module" src="index.js" async defer></script>
 </body>
 </html>

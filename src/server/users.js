@@ -1,6 +1,7 @@
 import { User } from './database.js';
-import session from 'express-session';
 import bodyParser from 'body-parser';
+import session from 'express-session';
+import { Sequelize } from 'sequelize';
 
 export default function(app) {
     app.use(session({
@@ -43,14 +44,28 @@ export default function(app) {
         return res.status(201).header('Location', url).json({created: url});
     });
 
-    app.get('/users', (req, res) => {
-        // TODO implement getting the scoreboard
-        return res.status(501).json({error: 'Not implemented'});
+    app.get('/users', async (req, res) => {
+        const users = (await User.findAll()).sort((a, b) => (b.winsChaser + b.winsRunner) - (a.winsChaser + a.winsRunner));
+
+        return res.json(users.map(user => ({
+            username: user.username,
+            winsChaser: user.winsChaser,
+            winsRunner: user.winsRunner
+        })));
     });
 
-    app.get('/users/:username', (req, res) => {
-        // TODO implement getting one user's info
-        return res.status(501).json({error: 'Not implemented'});
+    app.get('/users/:username', async (req, res) => {
+        const user = await User.findByPk(req.params.username);
+
+        if(!user) {
+            return res.status(404);
+        }
+
+        return res.json({
+            username: user.username,
+            winsChaser: user.winsChaser,
+            winsRunner: user.winsRunner
+        });
     });
 
     app.put('/users/:username/password', (req, res) => {
@@ -58,8 +73,21 @@ export default function(app) {
         return res.status(501).json({error: 'Not implemented'});
     });
 
-    app.delete('/users/:username', (req, res) => {
-        // TODO implement user deletion
-        return res.status(501).json({error: 'Not implemented'});
+    app.delete('/users/:username', async (req, res) => {
+        const user = await User.findByPk(req.params.username);
+
+        if(!user) {
+            return res.status(404);
+        }
+
+        const { username, password } = req.body;
+
+        if(!user.authenticate(password)) {
+            return res.status(401).json({error: 'Wrong password'});
+        }
+
+        user.destroy();
+
+        return res.status(204);
     });
 }

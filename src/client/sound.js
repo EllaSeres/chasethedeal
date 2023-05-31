@@ -1,6 +1,6 @@
 const audios = {};
 
-export default function playAudio(name, loop = false) {
+export function playAudio(name, loop = false) {
 	if(!audios[name]) {
 		const a = new Audio(name);
 		audios[name] = a;
@@ -12,7 +12,7 @@ export default function playAudio(name, loop = false) {
 	}
 }
 
-export default function stopAudio(name) {
+export function stopAudio(name) {
 	if(audios[name])
 		audios[name].stop();
 }

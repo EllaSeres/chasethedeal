@@ -1,4 +1,5 @@
 import { login, signup } from './auth.js';
+import { playAudio } from './sound.js';
 
 const $ = document.querySelector.bind(document),
     $$ = document.querySelectorAll.bind(document);
@@ -63,3 +64,14 @@ $('#playBtn').addEventListener('click', () => {
     const kind = $('#kindSlider').classList.contains('selected-right') ? 'chaser' : 'runner';
     window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });
+
+$$('button').forEach(btn => {
+    btn.addEventListener('mouseenter', () => {
+        playAudio('sound/buttonHover.ogg');
+    });
+    btn.addEventListener('click', () => {
+        playAudio('sound/buttonClick.ogg');
+    });
+});
+
+playAudio('sound/menuMusic_full.ogg', true);

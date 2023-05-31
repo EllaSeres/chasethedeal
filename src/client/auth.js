@@ -22,5 +22,5 @@ export async function signup(username, password) {
 }
 
 export async function scoreboard() {
-    return await (await api('GET', '/users')).json();
+    return await api('GET', '/users');
 }

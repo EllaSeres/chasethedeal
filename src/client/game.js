@@ -71,7 +71,6 @@ window.addEventListener("keyup", async (e) => {
 });
 
 let last = Date.now();
-playAudio("sound/gameMusic_full.ogg", true);
 function gameTick() {
   requestAnimationFrame(gameTick);
   const now = Date.now();
@@ -93,3 +92,5 @@ function gameTick() {
 }
 
 gameTick();
+
+playAudio("sound/gameMusic_full.ogg", true);

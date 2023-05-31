@@ -1,32 +1,26 @@
 'use strict';
 
 import expressWs from 'express-ws';
+import { GameObject, MapColliders } from '#lib/game.js';
+import { User } from './database.js';
 
 const games = {};
 
-class Player {
-    ws; x; y; score; game; kind;
-
-    constructor(ws, x, y, game) {
-        this.ws = ws;
-        this.x = x;
-        this.y = y;
-        this.score = 0;
-        this.game = game;
-    }
-
-    init(kind) {
-        console.log('Creating the', kind, 'player');
-        this.kind = kind;
-    }
-
-    move(newx, newy) {
-        // TODO: Check if this is a legal move
-        // TODO: Check if this move means the chaser wins or the runner gets more score
-        this.x = newx;
-        this.y = newy;
-    }
-}
+const LeafPositions = [
+    {x:386, y:294},
+    {x:337, y:112},
+    {x:194, y:300},
+    {x:6,   y:281},
+    {x:597, y:426},
+    {x:90,  y:478},
+    {x:400, y:500},
+    {x:747, y:577},
+    {x:698, y:238},
+    {x:700, y:124},
+    {x:749, y:24},
+    {x:581, y:123},
+    {x:450, y:229}
+];
 
 class Game {
     wsHost = null;
@@ -35,30 +29,80 @@ class Game {
 
     // players, leaves, roadblocks
     objects = {
-        runner: null,
-        chaser: null,
+        roadblock: new GameObject({name: 'roadblock', x: -100, y: -100}),
+        leaf: new GameObject({name: 'leaf', x: -100, y: -100})
     };
 
-    constructor(ws, name) {
-        this.wsHost = ws;
+    constructor(ws, name, playerKind, username) {
         this.name = name;
-        console.log('Game started by host:', name);
+        console.log('Game started by host:', name, 'as', playerKind);
 
-        this.gamelogic(ws);
+        setTimeout(() => this.respawnLeaf(), 0);
 
-        this.interval = setInterval(() => this.gameTick(), 100);
+        const hostPlayer = this.addPlayer(ws, playerKind);
+        this.wsHost = ws;
+        this.hostPlayer = hostPlayer;
+        this.hostPlayer.username = username;
+        this.gamelogic(ws, hostPlayer);
     }
 
-    addGuest(ws) {
-        console.log('Adding guest');
-        if(this.wsGuest) {
-            ws.send(JSON.stringify({'error': 'Game already has players'}));
+    addPlayer(ws, kind) {
+        if(kind !== 'runner' && kind !== 'chaser') {
+            console.log('Invalid player kind');
+            ws.send(JSON.stringify({
+                error: 'Invalid player kind'
+            }));
             return;
-        } else {
-            this.wsGuest = ws;
         }
 
-        this.gamelogic(ws);
+        if(kind == 'runner' && this.objects.runner) {
+            console.log('There\'s already a runner in the game');
+            ws.send(JSON.stringify({
+                error: 'There\'s already a runner in the game'
+            }));
+            return;
+        }
+
+        if(kind == 'chaser' && this.objects.chaser) {
+            console.log('There\'s already a chaser in the game');
+            ws.send(JSON.stringify({
+                error: 'There\'s already a chaser in the game'
+            }));
+            return;
+        }
+
+        // Process a player having chosen a class
+        const player = new GameObject({
+            x: kind == 'chaser' ? 10 : 790,
+            y: kind == 'chaser' ? 10 : 590,
+            name: kind
+        });
+        player.score = 0;
+        this.objects[kind] = player;
+        this.broadcast({
+            type: 'addObject',
+            name: kind,
+            x: player.x,
+            y: player.y
+        });
+        return player;
+    }
+
+    addGuest(ws, kind,username) {
+        if(this.wsGuest) {
+            console.log('Game full')
+            ws.send(JSON.stringify({'error': 'Game already has 2 players'}));
+            return;
+        }
+
+        const guestPlayer = this.addPlayer(ws, kind);
+        if(!guestPlayer) {
+            return;
+        }
+        this.guestPlayer.username = username;
+        this.wsGuest = ws;
+        this.guestPlayer = guestPlayer;
+        this.gamelogic(ws, guestPlayer);
     }
 
     broadcast(message) {
@@ -66,99 +110,169 @@ class Game {
         if(this.wsHost)  this.wsHost.send(JSON.stringify(message));
     }
 
-    gametick() {
-        // Runs 10 times a second, use it, for example, TODO:
-        // - set scores
-        // - spawn new leaves
-        // Don't use it to:
-        // - Compute player movements (that should be handled in Player.move)
-        // - Create player objects (done when handling "init" events)
-    }
-
-    gamelogic(ws) {
-        const player = new Player(ws, 0, 0, this);
+    gamelogic(ws, player) {
+        for(let objname of Object.keys(this.objects)) {
+            if(!(objname in this.objects)) continue;
+            if(!('toJSON' in this.objects[objname])) continue;
+            ws.send(JSON.stringify({
+                type: 'addObject',
+                ...(this.objects[objname].toJSON())
+            }));
+        }
 
         ws.on('message', message => {
             const data = JSON.parse(message);
 
             switch(data.type) {
-            case 'init':
-                if(data.kind !== 'runner' && data.kind !== 'chaser') {
-                    ws.send(JSON.stringify({
-                        type: 'init',
-                        error: 'Invalid player kind'
-                    }));
-                    return;
-                }
-
-                if(data.kind == 'runner' && this.objects.runner) {
-                    ws.send(JSON.stringify({
-                        type: 'init',
-                        error: 'There\'s already a runner in the game'
-                    }));
-                    return;
-                }
-
-                if(data.kind == 'chaser' && this.objects.chaser) {
-                    ws.send(JSON.stringify({
-                        type: 'init',
-                        error: 'There\'s already a chaser in the game'
-                    }));
-                    return;
-                }
-
-                // Process a player having chosen a class
-                player.init(data.kind);
-                this.objects[data.kind] = player;
-                this.broadcast({
-                    type: 'init',
-                    player: data.kind,
-                    x: player.x,
-                    y: player.y
-                });
-
-                break;
-
             case 'move': { // {type: 'move', newx: 123, newy: 234}
                 const { newx, newy } = data;
-                player.move(newx, newy); // This function checks if the move is legal and applies it to the player object accordingly
+                const dx = newx - player.x, dy = newy - player.y;
+
+                if(player.canMove(dx, dy) &&
+                    (player.name == 'chaser' || player.canMove(dx, dy, [this.objects.roadblock.getCollider()]))) {
+                    player.x = newx;
+                    player.y = newy;
+                }
+
                 this.broadcast({
-                    type: 'move',
-                    player: player.kind,
+                    type: 'updateObject',
+                    name: player.name,
                     x: player.x,
                     y: player.y
                 });
 
+                if(player.name == 'runner' && player.getCollider().collidesWith(this.objects.leaf.getCollider())) {
+
+                    player.score++;
+                    this.broadcast({
+                        type:'updateObject',
+                        name: player.name,
+                        score: player.score
+                    });
+
+                    if(player.score == 10) { // CHANGE THIS TO BALANCE GAME
+                        this.gameOver('runner');
+                    }
+
+                    this.respawnLeaf();
+                }
+
+                if(player.name == 'chaser' && player.getCollider().collidesWith(this.objects.runner.getCollider())) {
+                    player.score++;
+                    this.broadcast({
+                        type:'updateObject',
+                        name: player.name,
+                        score: player.score
+                    });
+
+                    this.gameOver('chaser');
+                }
+
+                break;
+            }
+
+            case 'roadblock': {
+                if(player.name != 'chaser') break;
+
+                const rb = this.objects.roadblock;
+                rb.x = player.x;
+                rb.y = player.y;
+                this.broadcast({
+                    type: 'updateObject',
+                    name: rb.name,
+                    x: rb.x,
+                    y: rb.y
+                });
                 break;
             }
             }
         });
 
         ws.on('disconnect', () => {
-            clearInterval(this.interval);
+            console.log('Disconnection in game', this.name)
             delete games[this.name];
         });
+    }
+
+    respawnLeaf() {
+        if(this.leafTimeout) {
+            clearTimeout(this.leafTimeout);
+            this.leafTimeout = null;
+        }
+
+        while(true) {
+            const idx = (Math.random() * LeafPositions.length) | 0;
+            const { x, y } = LeafPositions[idx];
+            if(Math.abs(this.objects.leaf.x - x) < 1 && Math.abs(this.objects.leaf.y - y) < 1) continue;
+
+            this.objects.leaf.x = x;
+            this.objects.leaf.y = y;
+            this.broadcast({
+                type: 'updateObject',
+                name: 'leaf',
+                x, y
+            });
+            break;
+        }
+
+        this.leafTimeout = setTimeout(() => this.respawnLeaf(), 30000); // respawn after 30s
+    }
+
+    gameOver(winner) {
+        this.broadcast({
+            type: 'gameOver',
+            winner: winner
+        });
+
+        this.wsGuest.close();
+        this.wsHost.close();
+
+        if(winner == 'chaser') {
+            // Chaser wins
+            const user = User.findByPk(
+                this.hostPlayer.name == 'chaser' ? 
+                this.hostPlayer.username :
+                this.guestPlayer.username
+            );
+
+            user.chaserPoints++;
+            user.save();
+            console.log(user);
+        } else {
+            // Runner wins
+            const user = User.findByPk(
+                this.hostPlayer.name == 'runner' ? 
+                this.hostPlayer.username :
+                this.guestPlayer.username
+            );
+
+            user.runnerPoints++;
+            user.save();
+            console.log(user);
+        }
     }
 }
 
 export default function(app) {
     expressWs(app);
 
-    console.log('Game logic loaded:)');
+    console.log('Game logic loaded :)');
 
     app.ws('/game', (ws, req) => {
-        const { peer } = req.query;
-        if(!peer) {
+        const { peer, kind, username } = req.query;
+        if(!peer || !kind || !username) {
             ws.close();
+            console.log('Bad req');
             return;
         }
 
         if(games[peer]) {
-            console.log('Guest added');
-            games[peer].addGuest(ws);
+            console.log('Adding guest to game', peer);
+            games[peer].addGuest(ws, kind, username);
         } else {
-            console.log('Game created');
-            games[peer] = new Game(ws, peer);
+            console.log('Creating game', peer);
+            games[peer] = new Game(ws, peer, kind, username);
         }
+        console.log('GAMES:', Object.keys(games))
     });
 }

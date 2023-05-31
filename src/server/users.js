@@ -1,6 +1,6 @@
 import { User } from './database.js';
-import session from 'express-session';
 import bodyParser from 'body-parser';
+import session from 'express-session';
 
 export default function(app) {
     app.use(session({

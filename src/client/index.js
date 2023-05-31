@@ -17,20 +17,31 @@ $('#login').addEventListener('submit', async e => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-    //alert('Login with ' + username + ' : ' + password);
+    alert('Login with ' + username + ' : ' + password);
 
-    //console.log(await login(username, password));
+    try {
+        await login(username, password);
 
-    //setScreen('game');
+        setScreen('code');
+    } catch(e) {
+        setScreen('login');
+    }
 });
 
 $('#signup').addEventListener('submit', async e => {
     e.preventDefault();
     const username = e.target.username.value;
     const password = e.target.password.value;
-    //alert('Signup with ' + username + ' : ' + password);
+    alert('Signup with ' + username + ' : ' + password);
 
-    //signup(username, password);
+    try {
+        await signup(username, password);
+        await login(username, password);
+
+        setScreen('code');
+    } catch(e) {
+        setScreen('login');
+    }
 });
 
 $('#selectDealer').addEventListener('click', () => {
@@ -45,4 +56,10 @@ $('#selectCop').addEventListener('click', () => {
     $('#currentKind').alt = 'cop';
     $('#kindSlider').classList.remove('selected-left');
     $('#kindSlider').classList.add('selected-right');
+});
+
+$('#playBtn').addEventListener('click', () => {
+    const code = $('#codeInput').value;
+    const kind = $('#kindSlider').classList == 'selected-right' ? 'chaser' : 'runner';
+    window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });

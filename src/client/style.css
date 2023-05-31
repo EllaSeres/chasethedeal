@@ -114,10 +114,10 @@ form button {
 	height: 15vh;
 }
 
-#delete{
+#deleteBtn {
 	height: 8vh;
 }
-#play{
+#loginBtn, #signupBtn {
 	height: 8vh;
 }
 #join{

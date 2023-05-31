@@ -5,7 +5,7 @@
 	
 </head>
 <body>
-	<div id="container" >
+	<div id="table-container" >
 		
 			<img id="title" alt="Chase the deal" src="title.svg" />
   <table style="width:100%">
@@ -14,18 +14,38 @@
     <th>Cop</th>
     <th>Dealer</th>
   </tr>
-  <tr>
-    <td>1</td>
-    <td>1</td>
-    <td>1</td>
-  </tr>
-  <tr>
-    <td>1</td>
-    <td>1</td>
-    <td>1</td>
-  </tr>
+
 </table>
 </div>
 
 </body>
 </html>
+<script>
+  function generateTable(data) {
+  // Create the table element
+  const table = document.createElement('table');
+
+  // Create the table header row
+  const headerRow = table.insertRow();
+  Object.keys(data[0]).forEach(key => {
+    const headerCell = document.createElement('th');
+    headerCell.textContent = key;
+    headerRow.appendChild(headerCell);
+  });
+
+  // Create the table rows
+  data.forEach(rowData => {
+    const row = table.insertRow();
+    Object.values(rowData).forEach(value => {
+      const cell = row.insertCell();
+      cell.textContent = value;
+    });
+  });
+
+  // Return the generated table
+  return table;
+} 
+const container = document.getElementById('table-container');
+const table = generateTable(data);
+container.appendChild(table);
+</script>

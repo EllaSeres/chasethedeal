@@ -11,8 +11,8 @@ const database = new Sequelize({
 export const User = database.define('User', {
     username: { type: DataTypes.STRING, primaryKey: true },
     password: { type: DataTypes.STRING },
-    winsChaser: { type: DataTypes.INTEGER },
-    winsRunner: { type: DataTypes.INTEGER }
+    winsChaser: { type: DataTypes.INTEGER, defaultValue: 0 },
+    winsRunner: { type: DataTypes.INTEGER, defaultValue: 0 }
 });
 
 useBcrypt(User); // Automatically hashes `password` and adds User.authenticate()

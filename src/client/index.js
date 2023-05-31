@@ -60,6 +60,7 @@ $('#selectCop').addEventListener('click', () => {
 
 $('#playBtn').addEventListener('click', () => {
     const code = $('#codeInput').value;
-    const kind = $('#kindSlider').classList == 'selected-right' ? 'chaser' : 'runner';
+    alert($('#kindSlider').classList);
+    const kind = $('#kindSlider').classList.contains('selected-right') ? 'chaser' : 'runner';
     window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });

@@ -26,6 +26,7 @@ class Game {
     wsHost = null;
     wsGuest = null;
     name = null;
+    running = false;
 
     // players, leaves, roadblocks
     objects = {
@@ -35,6 +36,7 @@ class Game {
 
     constructor(ws, name, playerKind, username) {
         this.name = name;
+        this.running = false;
         console.log('Game started by host:', name, 'as', playerKind);
 
         setTimeout(() => this.respawnLeaf(), 0);
@@ -77,6 +79,7 @@ class Game {
             y: kind == 'chaser' ? 10 : 590,
             name: kind
         });
+        player.username = '';
         player.score = 0;
         this.objects[kind] = player;
         this.broadcast({
@@ -88,7 +91,7 @@ class Game {
         return player;
     }
 
-    addGuest(ws, kind,username) {
+    addGuest(ws, kind, username) {
         if(this.wsGuest) {
             console.log('Game full')
             ws.send(JSON.stringify({'error': 'Game already has 2 players'}));
@@ -99,9 +102,13 @@ class Game {
         if(!guestPlayer) {
             return;
         }
-        this.guestPlayer.username = username;
         this.wsGuest = ws;
         this.guestPlayer = guestPlayer;
+        console.log("a!");
+        this.guestPlayer.username = username;
+        console.log("b!");
+        this.running = true;
+        console.log("RUNNING!");
         this.gamelogic(ws, guestPlayer);
     }
 
@@ -121,6 +128,11 @@ class Game {
         }
 
         ws.on('message', message => {
+            if(!this.running) {
+                console.log("Not running yet");
+                return;
+            }
+
             const data = JSON.parse(message);
 
             switch(data.type) {
@@ -218,37 +230,39 @@ class Game {
         this.leafTimeout = setTimeout(() => this.respawnLeaf(), 30000); // respawn after 30s
     }
 
-    gameOver(winner) {
+    async gameOver(winner) {
+        this.running = false;
+
         this.broadcast({
             type: 'gameOver',
             winner: winner
         });
 
-        this.wsGuest.close();
-        this.wsHost.close();
+        this.wsGuest && this.wsGuest.close();
+        this.wsHost && this.wsHost.close();
 
         if(winner == 'chaser') {
             // Chaser wins
-            const user = User.findByPk(
+            const user = await User.findByPk(
                 this.hostPlayer.name == 'chaser' ? 
                 this.hostPlayer.username :
                 this.guestPlayer.username
             );
-
-            user.chaserPoints++;
-            user.save();
             console.log(user);
+
+            user.winsChaser++;
+            user.save();
         } else {
             // Runner wins
-            const user = User.findByPk(
+            const user = await User.findByPk(
                 this.hostPlayer.name == 'runner' ? 
                 this.hostPlayer.username :
                 this.guestPlayer.username
             );
-
-            user.runnerPoints++;
-            user.save();
             console.log(user);
+
+            user.winsRunner++;
+            user.save();
         }
     }
 }

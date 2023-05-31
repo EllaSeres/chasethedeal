@@ -63,3 +63,9 @@ $('#playBtn').addEventListener('click', () => {
     const kind = $('#kindSlider').classList.contains('selected-right') ? 'chaser' : 'runner';
     window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });
+
+$('#clicketyclack').addEventListener('click', () => {
+    $('#clicketyclack').style.left = '-100000000px';
+
+    playAudio('sound/menuMusic_full.ogg', true);
+});

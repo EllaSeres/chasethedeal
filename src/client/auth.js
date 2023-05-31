@@ -20,3 +20,7 @@ export async function logout() {
 export async function signup(username, password) {
     return await api('POST', '/users', { username, password });
 }
+
+export async function scoreboard() {
+    return await (await api('GET', '/users')).json();
+}

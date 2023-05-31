@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta charset="UTF-8" >
 	<link rel="stylesheet" href="style.css">
 	<script type="module" src="index.js"></script>
 </head>
@@ -8,7 +9,7 @@
 	<div id="container" class="current-screen-main">
 		<div id="screen-main">
 			<img id="title" alt="Chase the deal" src="title.svg" />
-
+  
 			<div id="authentication">
 				<button id="loginButton" data-toscreen="login"><img src="login.svg" alt="Log in"></button>
 				<button id="signupButton" data-toscreen="signup"><img src="signup.svg" alt="Sign up"></button>
@@ -19,26 +20,38 @@
 				<button id="aboutButton" data-toscreen="about"><img src="ouid.svg" alt="About"></button>
 			</div>
 		</div>
-		<div id="screen-about">
-			<h1>About :)</h1>
-			<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-			proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+		<div id="screen-about" >
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="Credits">
+				<img id="Person1" alt="Cosmin Iacobuț" src="Person1.svg">
+				<img id="Person2" alt="Cosmin Iacobuț" src="Person2.svg">
+				<img id="Person3" alt="Cosmin Iacobuț" src="Person3.svg">
+				<img id="Person4" alt="Cosmin Iacobuț" src="Person4.svg">
+				<img id="Person5" alt="Cosmin Iacobuț" src="Person5.svg">
 
-			<button data-toscreen="main">Go back</button>
+            </div>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
 		</div>
 		<div id="screen-rules">
-			<h1>Rules :)</h1>
-			<button data-toscreen="main">Go back</button>
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="Rules">
+				<img id="Rule1" alt="Cosmin Iacobuț" src="Rule1.svg">
+				<p>Your objective is to catch the DEALER.You can park your car anywhere in the city, forcing the DEALER to choose another route.</p>
+				<img id="Rule2" alt="Cosmin Iacobuț" src="Rule2.svg">
+				<p>Your objective is to collect 10 BUDS without getting caught.</p>
+				<img id="Rule3" alt="Cosmin Iacobuț" src="Rule3.svg">
+				<p>In our game, players connect to a game room by entering the same word. </p>
+
+            </div>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
 		</div>
 		<div id="screen-login">
 			<img id="title" alt="Chase the deal" src="title.svg" />
 			<form id="login" action="#">
-				<label><img src="labelun.svg" alt="label username"><input type="text" name="username"></label>
-				<label><img src="labelps.svg" alt="label password"><input type="password" name="password"></label>
+				<label><img src="labelun.svg" alt="label username"><input type="text" name="username" id="username"></label>
+				<label><img src="labelps.svg" alt="label password"><input type="password" name="password" id="password"></label>
 				<br/>
 				<button id="play"><img src="play.svg" alt="Play" data-toscreen="code"></button>
 				<button id="delete" ><img src="delete.svg" alt="Delete user"></button>
@@ -76,10 +89,15 @@
                 </button>
                 <a href="#" id="selectCop">
                 	<img src="coptext.svg" alt="cop text" id="coptext">
+
                 </a>
             </div>
-            </div>
+           </div>
+       <div id="screen-">
+       	
+       </div>
 
 	</div>
+
 </body>
 </html>

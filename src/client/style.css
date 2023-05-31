@@ -12,6 +12,10 @@ body {
 	background-image: url(bg.png);
 	background-size: cover;
 	background-position: center;
+
+	color: #6b0063;
+	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif;
+	font-weight: 600;
 }
 
 #container {
@@ -28,6 +32,10 @@ body {
 	display: flex;
 	flex-direction: column;
 	padding-top: 12vh;
+}
+
+#container > div {
+	max-height: 100%;
 }
 
 #title {
@@ -192,3 +200,70 @@ height:4vh;
 	display: initial;
 }
 
+table {
+  border-collapse: collapse;
+  
+  
+}
+.class { 
+	font-family: Segoe UI,Frutiger,Frutiger Linotype,Dejavu Sans,Helvetica Neue,Arial,sans-serif; 
+}
+
+td, th {
+  border: 1px solid #d06e45;
+  border-width: 3px;
+  padding: 0.5rem;
+  text-align: left;
+   background-color:#8c2175 ;
+   border-radius: 7px;
+   text-align: center;
+  color: #d06e45;
+}
+#Credits
+{
+  max-height: 45vh;
+	width: 100%;
+	overflow-y: auto;
+}
+#Credits > img
+{
+	display: block;
+	height: 3rem;
+	max-width: 100%;
+	margin: auto;
+	padding: 1rem;
+
+}
+#Credits::-webkit-scrollbar{
+	 width: 1em;
+	background-color: #8c2175;
+}
+#Credits::-webkit-scrollbar-thumb{
+	 width: 1em;
+	background-color: #ff8d51;
+}
+
+
+#Rules
+{
+  max-height: 45vh;
+	width: 100%;
+	overflow-y: auto;
+}
+#Rules > img
+{
+	display: block;
+	height: 2rem;
+	max-width: 90%;
+	margin: auto;
+	
+
+}
+#Rules::-webkit-scrollbar{
+	 width: 1em;
+	background-color: #8c2175;
+}
+#Rules::-webkit-scrollbar-thumb{
+	 width: 1em;
+	background-color: #ff8d51;
+}

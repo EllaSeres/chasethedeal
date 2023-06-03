@@ -7,3 +7,5 @@ services:
   backend:
     build: .
     command: npm run backend
+    ports:
+      - "8430:8430"

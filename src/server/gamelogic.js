@@ -140,18 +140,30 @@ class Game {
                 const { newx, newy } = data;
                 const dx = newx - player.x, dy = newy - player.y;
 
-                if(player.canMove(dx, dy) &&
-                    (player.name == 'chaser' || player.canMove(dx, dy, [this.objects.roadblock.getCollider()]))) {
+                const canMove = player.canMove(dx, dy) &&
+                    (player.name == 'chaser' || player.canMove(dx, dy, [this.objects.roadblock.getCollider()]))
+
+                if(canMove) {
                     player.x = newx;
                     player.y = newy;
+
+                    // Only send move to other player
+                    const otherWs = ws == this.wsHost ? this.wsGuest : this.wsHost;
+                    otherWs.send(JSON.stringify({
+                        type: 'updateObject',
+                        name: player.name,
+                        x: player.x,
+                        y: player.y
+                    }));
+                } else {
+                    this.broadcast({
+                        type: 'updateObject',
+                        name: player.name,
+                        x: player.x,
+                        y: player.y
+                    });
                 }
 
-                this.broadcast({
-                    type: 'updateObject',
-                    name: player.name,
-                    x: player.x,
-                    y: player.y
-                });
 
                 if(player.name == 'runner' && player.getCollider().collidesWith(this.objects.leaf.getCollider())) {
 

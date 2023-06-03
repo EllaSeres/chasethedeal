@@ -65,7 +65,7 @@ $('#playBtn').addEventListener('click', () => {
     window.location = `/game.html?name=${encodeURIComponent(code)}&kind=${encodeURIComponent(kind)}`;
 });
 
-playAudio("sound/menuMusic_full.ogg", true, 0.1)
+
 
 $$('button').forEach(btn => {
     btn.addEventListener('mouseenter', () => {

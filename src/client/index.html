@@ -5,6 +5,10 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
+	<div id="above">
+		<img id="logo" alt="Chase the deal" src="logo.svg" />
+  </div>
+   
 	<div id="container" class="current-screen-main">
 		<div id="screen-main">
 			<img id="title" alt="Chase the deal" src="title.svg" />
@@ -94,5 +98,15 @@
             </div>
 	</div>
 	<script type="module" src="index.js" async defer></script>
+<script type="text/javascript">
+
+document.getElementById("above").addEventListener("click", 
+	function click(){
+		document.getElementById("above").style.display="none";
+		playAudio("sound/menuMusic_full.ogg", true, 0.1)
+	}
+)
+
+</script>
 </body>
 </html>

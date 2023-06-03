@@ -267,3 +267,19 @@ td, th {
 	 width: 1em;
 	background-color: #ff8d51;
 }
+#above{
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	z-index: 100;
+	position: absolute;
+
+	display: flex;
+	background-color: #ffe9ff;
+
+	justify-content: center;
+	align-items: center;
+}
+#logo{
+	max-width: 30rem;
+}

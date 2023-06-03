@@ -155,7 +155,18 @@ class Game {
                         x: player.x,
                         y: player.y
                     }));
-                } else {
+                }
+
+                const mustForceMove = player.x < 0 || player.y < 0 || player.x > 800 || player.y > 600;
+
+                if(mustForceMove) {
+                    if(player.x < 0) player.x = 1;
+                    if(player.x > 800) player.x = 799;
+                    if(player.y < 0) player.y = 1;
+                    if(player.y > 600) player.y = 599;
+                }
+
+                if(!canMove || mustForceMove) {
                     this.broadcast({
                         type: 'updateObject',
                         name: player.name,
@@ -163,7 +174,6 @@ class Game {
                         y: player.y
                     });
                 }
-
 
                 if(player.name == 'runner' && player.getCollider().collidesWith(this.objects.leaf.getCollider())) {
 

@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "JS chaser game :)",
   "scripts": {
+    "start": "vite build && npm run backend",
     "backend": "node src/server/index.js",
     "frontend:dev": "vite",
+    "frontend:build": "vite build",
     "dev": "concurrently 'npm run backend' 'npm run frontend:dev'",
     "lint": "eslint src"
   },

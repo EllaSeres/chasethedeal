@@ -1,14 +1,112 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel="stylesheet" href="style.css">
-		<script type="module" src="index.js"></script>
-	</head>
-	<body  >
-		<div class="centered">
-  			<div class="centered-vertical">
-  				<button class="login"></button>
+<head>
+	<meta charset="UTF-8" >
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="above">
+		<img id="logo" alt="Chase the deal" src="logo.svg" />
+  </div>
+   
+	<div id="container" class="current-screen-main">
+		<div id="screen-main">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+  
+			<div id="authentication">
+				<button id="loginButton" data-toscreen="login"><img src="login.svg" alt="Log in"></button>
+				<button id="signupButton" data-toscreen="signup"><img src="signup.svg" alt="Sign up"></button>
+			</div>
+
+			<div id="infos">
+				<button id="rulesButton" data-toscreen="rules"><img src="cuffs.svg" alt="Rules"></button>
+				<button id="aboutButton" data-toscreen="about"><img src="ouid.svg" alt="About"></button>
 			</div>
 		</div>
-	</body>
+		<div id="screen-about" >
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="Credits">
+				<img id="Person1" alt="Cosmin Iacobuț" src="Person1.svg">
+				<img id="Person2" alt="Cosmin Iacobuț" src="Person2.svg">
+				<img id="Person3" alt="Cosmin Iacobuț" src="Person3.svg">
+				<img id="Person4" alt="Cosmin Iacobuț" src="Person4.svg">
+				<img id="Person5" alt="Cosmin Iacobuț" src="Person5.svg">
+
+            </div>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-rules">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="Rules">
+				<img id="Rule1" alt="Cosmin Iacobuț" src="Rule1.svg">
+				<p>Your objective is to catch the DEALER.You can park your car anywhere in the city, forcing the DEALER to choose another route.</p>
+				<img id="Rule2" alt="Cosmin Iacobuț" src="Rule2.svg">
+				<p>Your objective is to collect 10 BUDS without getting caught.</p>
+				<img id="Rule3" alt="Cosmin Iacobuț" src="Rule3.svg">
+				<p>In our game, players connect to a game room by entering the same word. </p>
+
+            </div>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-login">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<form id="login" action="#">
+				<label><img src="labelun.svg" alt="label username"><input type="text" name="username" id="username"></label>
+				<label><img src="labelps.svg" alt="label password"><input type="password" name="password" id="password"></label>
+				<br/>
+				<button id="loginBtn"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+				<button id="deleteBtn" ><img src="delete.svg" alt="Delete user"></button>
+			</form>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-signup">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<form id="signup" action="#">
+				<label><img src="labelun.svg" alt="label username"><input type="text" name="username"></label>
+				<label><img src="labelps.svg" alt="label password"><input type="password" name="password"></label>
+				<br/>
+				<button id="signupBtn"><img src="play.svg" alt="Play" data-toscreen="code"></button>
+			</form>
+
+			<button id="arrow" data-toscreen="main"><img src="arrowback.svg" alt="Arrow back"></button>
+		</div>
+		<div id="screen-code">
+			<img id="title" alt="Chase the deal" src="title.svg" />
+			<div id="codehold">
+			<form id="code" onsubmit="return false;">
+			<label><img src="gamecode.svg" alt="label code"><input type="text" name="code" id="codeInput"></label>
+			<button id="join" data-toscreen="dealer"><img src="join.svg" alt="Join"></button>
+            </form>
+        </div>
+         </div>
+            <div id="screen-dealer">
+            <img id="title" alt="Chase the deal" src="title.svg" />
+            <img src="dealer.svg" alt="Dealer" id="currentKind">	
+             <div class="slider" id="kindSlider">
+                <a href="#" id="selectDealer">
+                    <img src="dealertext.svg" alt="dealer text" id="dealertext">
+                 </a>
+                <a href="#" id="selectCop">
+                	<img src="coptext.svg" alt="cop text" id="coptext">
+
+                </a>
+            </div>
+            <button id="playBtn">Play</button>
+            </div>
+	</div>
+	<script type="module" src="index.js" async defer></script>
+<script type="text/javascript">
+
+document.getElementById("above").addEventListener("click", 
+	function click(){
+		document.getElementById("above").style.display="none";
+		playAudio("sound/menuMusic_full.ogg", true, 0.1)
+	}
+)
+
+</script>
+</body>
 </html>

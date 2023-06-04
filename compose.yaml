@@ -1,0 +1,11 @@
+services:
+  frontend:
+    build: .
+    volumes:
+      - /var/www/chasethedeal:/app/src/client/dist
+    command: npm run frontend:build
+  backend:
+    build: .
+    command: npm run backend
+    ports:
+      - "8430:8430"

@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "JS chaser game :)",
   "scripts": {
+    "start": "vite build && npm run backend",
     "backend": "node src/server/index.js",
     "frontend:dev": "vite",
+    "frontend:build": "vite build",
     "dev": "concurrently 'npm run backend' 'npm run frontend:dev'",
     "lint": "eslint src"
   },
@@ -30,8 +32,15 @@
     "vite": "^4.2.1"
   },
   "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "morgan": "^1.10.0"
+    "express-session": "^1.17.3",
+    "express-ws": "^5.0.2",
+    "morgan": "^1.10.0",
+    "sequelize": "^6.31.0",
+    "sequelize-bcrypt": "^1.2.0",
+    "sqlite3": "^5.1.6"
   }
 }
